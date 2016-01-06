@@ -30,13 +30,19 @@ public class Polygon {
     }
     
     public void scanlineFill(){
+        pixelBuffer = new ArrayList<>();
+        boolean fill = false;
         for(double x = this.getXMin(); x <= this.getXMax(); x++){
             for(double y = this.getYMin(); y<= this.getYMax(); y++){
                 for(double z = this.getZMin(); z<=this.getZMax(); z++){
                     Vertex v = new Vertex(x,y,z);
-                    fill = false;
                     for(Edge e: this.edges){
-                        
+                        if(e.intersects(v)){
+                            fill = !fill;
+                            if(fill){
+                                pixelBuffer.add(v);
+                            }
+                        }
                     }
                 }
             }

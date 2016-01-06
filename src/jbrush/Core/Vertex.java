@@ -30,13 +30,22 @@ public class Vertex {
         z_squared = Math.pow(another.z - this.z,2);
         y_squared = Math.pow(another.y - this.y,2);
         x_squared = Math.pow(another.x - this.x,2);
-        
+          
         return Math.sqrt((z_squared+x_squared+y_squared));
+    } 
+    public boolean collidesWith(Vertex v){
+        if(
+             this.x == v.x &&
+             this.y == v.y &&
+             this.z == v.z
+            ){
+                return true;
+            }
+        return false;
     }
-    
     public void setLocation(double x, double y, double z){
         this.x = 0;
         this.y = 0;
         this.z = 0;
     }
-}
+} 
