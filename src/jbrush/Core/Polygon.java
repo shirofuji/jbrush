@@ -10,48 +10,86 @@ import java.util.ArrayList;
  * @author Shirofuji
  */
 public class Polygon {
+    public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
     private int default_color = 0xD3D3D3;
     private Integer color = null;
-    public Polygon(Edge edgeA,Edge edgeB,Edge edgeC,Edge edgeD) throws Exception{
-        if(edgeA.vertices.get(0).distanceFrom(edgeB.vertices.get(0)) != 0 || 
-            edgeA.vertices.get(0).distanceFrom(edgeB.vertices.get(0)) != 0){
-            throw new Exception("First edge should share a common vertex with the second edge.");
-        }
-        else if(edgeB.vertices.get(0).distanceFrom(edgeC.vertices.get(0)) != 0 || 
-            edgeB.vertices.get(0).distanceFrom(edgeC.vertices.get(0)) != 0){
-            throw new Exception("Second edge should share a common vertex with the third edge.");
-        }
-        else if(edgeC.vertices.get(0).distanceFrom(edgeD.vertices.get(0)) != 0 || 
-            edgeC.vertices.get(0).distanceFrom(edgeD.vertices.get(0)) != 0){
-            throw new Exception("Third edge should share a common vertex with the fourth edge.");
-        }
-        else if(edgeD.vertices.get(0).distanceFrom(edgeD.vertices.get(0)) != 0 || 
-            edgeD.vertices.get(0).distanceFrom(edgeD.vertices.get(0)) != 0){
-            throw new Exception("Last edge should share a common vertex with the first edge.");
-        }else{
-           edges.add(edgeA);
-           edges.add(edgeB);
-           edges.add(edgeC);
-           edges.add(edgeD);   
-        }
+    public Polygon(Vertex A, Vertex B, Vertex C, Vertex D){
+        this.vertices = new ArrayList<>();
+        this.edges = new ArrayList<>();
+        this.vertices.add(A);
+        this.vertices.add(B);
+        this.vertices.add(C);
+        this.vertices.add(D);
+        
+        this.edges.add(new Edge(A, B));
+        this.edges.add(new Edge(B, C));
+        this.edges.add(new Edge(C, D));
+        this.edges.add(new Edge(D, A));
     }
-    public int getColor(){
-        if(color == null){
-            return default_color;
-        }else{
-            return color;
-        }
-    }
-    public ArrayList<Vertex> getVertices(){
-        ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-        for(Edge current_edge: edges){
-            vertices.add(current_edge.vertices.get(0));
-            vertices.add(current_edge.vertices.get(1));
-        }
+    
+    public void scanlineFill(){
         
     }
-    private ArrayList<Vertex> removeDulplicates(ArrayList<Vertex> vertices){
-        
+    
+    public double getYMax(){
+        int count = this.vertices.size();
+        double yMax = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                yMax = this.vertices.get(i).y;
+            }else{
+                double current_y = this.vertices.get(i).y;
+                if(current_y > yMax){
+                    yMax = current_y;
+                }
+            }
+        }
+        return yMax;
+    }
+    public double getYMin(){
+        int count = this.vertices.size();
+        double yMin = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                yMin = this.vertices.get(i).y;
+            }else{
+                double current_y = this.vertices.get(i).y;
+                if(current_y < yMin){
+                    yMin = current_y;
+                }
+            }
+        }
+        return yMin;
+    }
+    public double getXMax(){
+        int count = this.vertices.size();
+        double xMax = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                xMax = this.vertices.get(i).x;
+            }else{
+                double current_x = this.vertices.get(i).x;
+                if(current_x > xMax){
+                    xMax = current_x;
+                }
+            }
+        }
+        return xMax;
+    }
+    public double getXMin(){
+        int count = this.vertices.size();
+        double xMin = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                xMin = this.vertices.get(i).x;
+            }else{
+                double current_x = this.vertices.get(i).x;
+                if(current_x < xMin){
+                    xMin = current_x;
+                }
+            }
+        }
+        return xMin;
     }
 }

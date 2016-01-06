@@ -52,25 +52,25 @@ public class Camera {
         if(this.perspective){
             
         }else{
-            ArrayList<Point2D> screen_points = new ArrayList<>();
+           // ArrayList<Point2D> screen_points = new ArrayList<>();
             poly.vertices.stream().forEach((Vertex vert) -> {
                 double projectedX;
                 double projectedY;
                 if(vert.z == 0) vert.z = 0.00001; 
                 projectedX = (vert.x - this.x) * (this.far / vert.z) + Camera.this.x;
                 projectedY = (vert.y - this.y) * (this.far / vert.z) + Camera.this.y;
-                screen_points.add(new Point2D(projectedX, projectedY));
+//                screen_points.add(new Point2D(projectedX, projectedY));
             });
             String svg_path = "M";
-            for(Point2D point: screen_points){
-                if(svg_path == "M"){
-                    String start = point.x+" "+point.y;
-                    svg_path += start;
-                }else{
-                    String line = "L"+point.x+" "+point.y;
-                    svg_path += line;
-                }
-            }
+//            for(Point2D point: screen_points){
+//                if(svg_path == "M"){
+//                    String start = point.x+" "+point.y;
+//                    svg_path += start;
+//                }else{
+//                    String line = "L"+point.x+" "+point.y;
+//                    svg_path += line;
+//                }
+//            }
             svg_path += "Z";
             System.out.println(svg_path);
         }

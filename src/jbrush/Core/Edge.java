@@ -13,11 +13,33 @@ import java.util.ArrayList;
  */
 public class Edge {
     public ArrayList<Vertex> vertices;
+    private float EPSILON = 0.001f;
     public Edge(Vertex vertexA, Vertex vertexB){
         vertices.add(vertexA);
         vertices.add(vertexB);
     }
+    
     public double length(){
         return vertices.get(1).distanceFrom(vertices.get(0));
+    }
+    
+    private boolean intersectsXY(Vertex v){
+        // (y2 - y1)=m(x2 - x1)
+        Vertex vertexA = this.vertices.get(1);
+        Vertex vertexB = this.vertices.get(0);
+        double a = (vertexA.y - vertexB.y)/(vertexA.x - vertexB.x);
+        double b = vertexA.y - (a*vertexA.x);
+        return Math.abs(v.y - ((a*v.x)+b)) > this.EPSILON;
+    }
+    private boolean intersectsXZ(Vertex v){
+        // (z2 - z1)=m(x2 - x1)
+        Vertex vertexA = this.vertices.get(1);
+        Vertex vertexB = this.vertices.get(0);
+        double a = (vertexA.z - vertexB.z)/(vertexA.x - vertexB.x);
+        double b = vertexA.z - (a*vertexA.x);
+        return Math.abs(v.z - ((a*v.x)+b)) > this.EPSILON;
+    }
+    public boolean intersects(Vertex v){
+        return (this.intersectsXY(v) && this.intersectsXZ(v));
     }
 }
