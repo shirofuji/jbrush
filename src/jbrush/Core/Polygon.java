@@ -43,4 +43,15 @@ public class Polygon {
             return color;
         }
     }
+    public ArrayList<Vertex> getVertices(){
+        ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+        for(Edge current_edge: edges){
+            vertices.add(current_edge.vertices.get(0));
+            vertices.add(current_edge.vertices.get(1));
+        }
+        
+    }
+    private ArrayList<Vertex> removeDulplicates(ArrayList<Vertex> vertices){
+        
+    }
 }

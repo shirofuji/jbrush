@@ -5,6 +5,8 @@
  */
 package jbrush.Core;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Shirofuji
@@ -18,8 +20,7 @@ public class Camera {
     private double look_y;
     private double look_z;
     
-    public double near;
-    public double far;
+    public double far = 20;
     
     private boolean perspective = false;
     
@@ -47,10 +48,31 @@ public class Camera {
         this.look_z = z;
     }
     public void project(Polygon poly){
+        
         if(this.perspective){
             
         }else{
-            
+            ArrayList<Point2D> screen_points = new ArrayList<>();
+            poly.vertices.stream().forEach((Vertex vert) -> {
+                double projectedX;
+                double projectedY;
+                if(vert.z == 0) vert.z = 0.00001; 
+                projectedX = (vert.x - this.x) * (this.far / vert.z) + Camera.this.x;
+                projectedY = (vert.y - this.y) * (this.far / vert.z) + Camera.this.y;
+                screen_points.add(new Point2D(projectedX, projectedY));
+            });
+            String svg_path = "M";
+            for(Point2D point: screen_points){
+                if(svg_path == "M"){
+                    String start = point.x+" "+point.y;
+                    svg_path += start;
+                }else{
+                    String line = "L"+point.x+" "+point.y;
+                    svg_path += line;
+                }
+            }
+            svg_path += "Z";
+            System.out.println(svg_path);
         }
     }
 }
