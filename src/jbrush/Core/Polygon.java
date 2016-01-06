@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Polygon {
     public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
+    public ArrayList<Pixel3D> pixelBuffer;
     private int default_color = 0xD3D3D3;
     private Integer color = null;
     public Polygon(Vertex A, Vertex B, Vertex C, Vertex D){
@@ -29,7 +30,17 @@ public class Polygon {
     }
     
     public void scanlineFill(){
-        
+        for(double x = this.getXMin(); x <= this.getXMax(); x++){
+            for(double y = this.getYMin(); y<= this.getYMax(); y++){
+                for(double z = this.getZMin(); z<=this.getZMax(); z++){
+                    Vertex v = new Vertex(x,y,z);
+                    fill = false;
+                    for(Edge e: this.edges){
+                        
+                    }
+                }
+            }
+        }
     }
     
     public double getYMax(){
@@ -91,5 +102,35 @@ public class Polygon {
             }
         }
         return xMin;
+    }
+    public double getZMax(){
+        int count = this.vertices.size();
+        double zMax = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                zMax = this.vertices.get(i).z;
+            }else{
+                double current_z = this.vertices.get(i).z;
+                if(current_z > zMax){
+                    zMax = current_z;
+                }
+            }
+        }
+        return zMin;
+    }
+    public double getZMin(){
+        int count = this.vertices.size();
+        double zMin = 0;
+        for(int i = 0;i<count;i++){
+            if(i == 0){
+                zMin = this.vertices.get(i).z;
+            }else{
+                double current_z = this.vertices.get(i).z;
+                if(current_z < zMin){
+                    zMin = current_z;
+                }
+            }
+        }
+        return zMin;
     }
 }
