@@ -27,7 +27,7 @@ public class Main {
             new Vertex(1,2,3)
             );
         poly.scanlineFill();
-        for(Pixel3D pixel: poly.pixelBuffer){
+        for(Pixel_3D pixel: poly.pixelBuffer){
             pixel.log();
         }
     }

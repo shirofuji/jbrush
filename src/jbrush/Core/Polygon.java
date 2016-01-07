@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Polygon {
     public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
-    public ArrayList<Pixel3D> pixelBuffer;
+    public ArrayList<Pixel_3D> pixelBuffer;
     private int default_color = 0xD3D3D3;
     private Integer color = null;
     public Polygon(Vertex A, Vertex B, Vertex C, Vertex D){
@@ -39,7 +39,7 @@ public class Polygon {
                         if(e.intersects(v)){
                             fill = !fill;
                             if(fill){
-                                pixelBuffer.add(new Pixel3D(v));
+                                pixelBuffer.add(new Pixel_3D(v));
                             }
                         }
                     }
