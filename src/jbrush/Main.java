@@ -5,6 +5,10 @@
  */
 package jbrush;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 import jbrush.Core.*;
 /**
  *
@@ -17,18 +21,26 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        // JBrushWindow appWindow;
-        // appWindow = new JBrushWindow("JBrush");
-        // appWindow.show();
+        JBrushWindow appWindow;
+        appWindow = new JBrushWindow("JBrush");
+        appWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        appWindow.setSize(1024,768);
+        appWindow.setVisible(true);
+        Camera cam = new Camera(200,100,100,appWindow.getWidth()/2,appWindow.getHeight()/2,5);
         Polygon poly = new Polygon(
-            new Vertex(3,1,3),
-            new Vertex(3,1,1),
-            new Vertex(1,2,1),
-            new Vertex(1,2,3)
+            new Vertex(500,800,800),
+            new Vertex(500,800,500),
+            new Vertex(800,800,500),
+            new Vertex(800,800,800)
             );
         poly.scanlineFill();
+        ArrayList<Point2D> pixelBuffer = new ArrayList<>();
         for(Pixel_3D pixel: poly.pixelBuffer){
-            pixel.log();
+            Point2D projectedPixel = cam.project(pixel);
+            Graphics g = appWindow.getGraphics();
+            g.setColor(Color.GRAY);
+            g.fillRect((int)projectedPixel.x,(int)projectedPixel.y,(int)projectedPixel.x+1,(int)projectedPixel.y+1);
+            appWindow.paint(g);
         }
     }
     

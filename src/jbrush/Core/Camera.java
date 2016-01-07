@@ -47,6 +47,14 @@ public class Camera {
         this.look_y = y;
         this.look_z = z;
     }
+    public Point2D project(Pixel_3D pixel){
+        double projectedX;
+        double projectedY;
+        if(pixel.z == 0) pixel.z = 0.00001; 
+        projectedX = (pixel.x - this.x) * (this.far / pixel.z) + Camera.this.x;
+        projectedY = (pixel.y - this.y) * (this.far / pixel.z) + Camera.this.y;
+        return new Point2D(projectedX,projectedY);
+    }
     public void project(Polygon poly){
         
         if(this.perspective){

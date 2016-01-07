@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package jbrush;
+import java.awt.Graphics;
 import javax.swing.*;
 /**
  *
@@ -13,5 +14,9 @@ public class JBrushWindow extends JFrame{
     public JBrushWindow(String title){
         this.setTitle(title);
     }
-    
+    @Override
+    public void paint(Graphics g){
+        
+    }
+   
 }
