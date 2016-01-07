@@ -10,9 +10,9 @@ package jbrush.Core;
  * @author Shirofuji
  */
 public class Vertex {
-    public double x;
-    public double y;
-    public double z;
+    public double x = 0.00001;
+    public double y = 0.00001;
+    public double z = 0.00001;
     
     public double u;
     public double w;
@@ -21,6 +21,9 @@ public class Vertex {
         this.x = x;
         this.y = y;
         this.z = z;
+        if(x == 0) x = 0.00001;
+        if(y == 0) y = 0.00001;
+        if(z == 0) z = 0.00001;
     }
     public double distanceFrom(Vertex another){
         double z_squared;
