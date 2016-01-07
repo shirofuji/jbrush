@@ -22,11 +22,10 @@ public class Polygon {
         this.vertices.add(B);
         this.vertices.add(C);
         this.vertices.add(D);
-        
-        this.edges.add(new Edge(A, B));
-        this.edges.add(new Edge(B, C));
-        this.edges.add(new Edge(C, D));
-        this.edges.add(new Edge(D, A));
+        this.edges.add(new Edge(this.vertices.get(0), this.vertices.get(1)));
+        this.edges.add(new Edge(this.vertices.get(1), this.vertices.get(2)));
+        this.edges.add(new Edge(this.vertices.get(2), this.vertices.get(3)));
+        this.edges.add(new Edge(this.vertices.get(3), this.vertices.get(1)));
     }
     
     public void scanlineFill(){
@@ -40,7 +39,7 @@ public class Polygon {
                         if(e.intersects(v)){
                             fill = !fill;
                             if(fill){
-                                pixelBuffer.add(v);
+                                pixelBuffer.add(new Pixel3D(v));
                             }
                         }
                     }
@@ -122,7 +121,7 @@ public class Polygon {
                 }
             }
         }
-        return zMin;
+        return zMax;
     }
     public double getZMin(){
         int count = this.vertices.size();

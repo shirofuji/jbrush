@@ -5,6 +5,7 @@
  */
 package jbrush;
 
+import jbrush.Core.*;
 /**
  *
  * @author Administrator
@@ -16,9 +17,19 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        JBrushWindow appWindow;
-        appWindow = new JBrushWindow("JBrush");
-        appWindow.show();
+        // JBrushWindow appWindow;
+        // appWindow = new JBrushWindow("JBrush");
+        // appWindow.show();
+        Polygon poly = new Polygon(
+            new Vertex(3,1,3),
+            new Vertex(3,1,1),
+            new Vertex(1,2,1),
+            new Vertex(1,2,3)
+            );
+        poly.scanlineFill();
+        for(Pixel3D pixel: poly.pixelBuffer){
+            pixel.log();
+        }
     }
     
 }
