@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Edge {
     public ArrayList<Vertex> vertices;
+    public ArrayList<Pixel_3D> pixels;
     private float EPSILON = 0.001f;
     public Edge(Vertex vertexA, Vertex vertexB){
         this.vertices = new ArrayList<>();
@@ -45,29 +46,18 @@ public class Edge {
         return (Math.abs(v.z - ((ax*v.x)+bx)) > this.EPSILON || Math.abs(v.z - ((ay*v.y)+by)) > this.EPSILON);
         
     }
+    private void get_pixels(){
+        pixels = new ArrayList<>();
+        pixels.add(new Pixel_3D(this.vertices.get(0)));
+        pixels.add(new Pixel_3D(this.vertices.get(1)));
+        pixels.add(new Pixel_3D((this.vertices.get(0).x + this.vertices.get(1).x)/2,
+                                 (this.vertices.get(0).y + this.vertices.get(1).y)/2,
+                                  (this.vertices.get(0).z + this.vertices.get(1).z/2)));
+        while(pixels.size() < this.length()){
+            
+        }
+    }
     public boolean intersects(Vertex v){
-        // (X0,y0,z0) = (x1,y1,z1) + t(x2-x1,y2-y1,z2-z1)
-        Vector3d vert = new Vector3d((float)v.x,(float)v.y,(float)v.z);
-        
-        Vector3d pointA = new Vector3d((float)this.vertices.get(0).x,(float)this.vertices.get(0).y,(float)this.vertices.get(0).z);
-        Vector3d pointB = new Vector3d((float)this.vertices.get(1).x,(float)this.vertices.get(1).y,(float)this.vertices.get(1).z);
-        Vector3d midPoint = new Vector3d((pointA.x + pointB.x)/2,(pointA.y + pointB.y)/2,(pointA.z+ pointB.z)/2);
-        
-        // (x0,y0,z0) - (x1,y1,z1)
-        Vector3d topEquation = vert.copy();
-        topEquation.sub(pointA);
-        
-        //(x2-x1,y2-y1,z2-z1)
-        Vector3d botEquation = pointB.copy();
-        botEquation.sub(pointA);
-        
-        float tx = topEquation.x/botEquation.x;
-        float ty = topEquation.y/botEquation.y;
-        float tz = topEquation.z/botEquation.z;
-        
-        System.out.print(topEquation.toString()+",");
-        System.out.print(botEquation.toString()+"\n");
-        return (tx == ty && ty == tz && tz == tx);
-        // return (this.intersectsXY(v) || this.intersectsXZ(v));
+        return (this.intersectsXY(v) || this.intersectsXZ(v));
     }
 }

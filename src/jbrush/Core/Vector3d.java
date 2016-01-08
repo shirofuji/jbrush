@@ -202,6 +202,11 @@ public class Vector3d {
         }
     }
     
+    public final static Vector3d normalize(Vector3d A) {
+        float t = A.x*A.x + A.y*A.y + A.z*A.z;
+        if (t != 0 && t != 1) t = (float)(1 / Math.sqrt(t));
+        return new Vector3d(A.x*t, A.y*t, A.z*t);
+    }
     /**
      * Limit the magnitude of this vector
      * @param max the maximum length to limit this vector
