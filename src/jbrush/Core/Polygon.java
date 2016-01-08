@@ -4,15 +4,20 @@
  * and open the template in the editor.
  */
 package jbrush.Core;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Vector;
 /**
  *
  * @author Shirofuji
  */
-public class Polygon {
+public class Polygon implements Renderable{
     public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
     public ArrayList<Pixel_3D> pixelBuffer;
+    public Surface s;
+    public Vector3d plane;
+    
     private int default_color = 0xD3D3D3;
     private Integer color = null;
     public Polygon(Vertex A, Vertex B, Vertex C, Vertex D){
@@ -28,6 +33,40 @@ public class Polygon {
         this.edges.add(new Edge(this.vertices.get(3), this.vertices.get(1)));
     }
     
+    public Vector3d getNormalVector(){
+        Vector3d a;
+        Vector3d b;
+        Vector3d c;
+        a = new Vector3d(this.vertices.get(0));
+        b = new Vector3d(this.vertices.get(1));
+        c = new Vector3d(this.vertices.get(2));
+        
+        Vector3d ab = a.copy();
+        ab.sub(b);
+        Vector3d bc = c.copy();
+        bc.sub(b);
+        
+        Vector3d cross = ab.cross(bc);
+        
+        return cross;
+    }
+    
+    public Vector3d getCenter(){
+        Vector3d a = new Vector3d(this.vertices.get(0));
+        Vector3d b = new Vector3d(this.vertices.get(1));
+        Vector3d c = new Vector3d(this.vertices.get(2));
+        Vector3d d = new Vector3d(this.vertices.get(3));
+        
+        Vector3d ab = a.copy();
+        a.sub(b);
+        
+        Vector3d cd = c.copy();
+        c.sub(d);
+        
+        Vector3d abcd = ab.copy();
+        abcd.sub(cd);
+        return abcd;
+    }
     public void scanlineFill(){
         pixelBuffer = new ArrayList<>();
         boolean fill = false;
@@ -137,5 +176,23 @@ public class Polygon {
             }
         }
         return zMin;
+    }
+
+    @Override
+    public boolean intersect(Ray r) {
+        Vector3d normal = this.getNormalVector();
+        Vector3d center = this.getCenter();
+        float denom = normal.dot(r.direction);
+        if(Math.abs(denom) > 0.0001f){
+            center.sub(new Vector3d(this.vertices.get(0)));
+            float t=center.dot(normal);
+            if(t >= 0f) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Color Shade(Ray r, Vector lights, Vector objects, Color bgnd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

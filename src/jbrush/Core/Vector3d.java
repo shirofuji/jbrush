@@ -10,6 +10,15 @@ package jbrush.Core;
  * @author dominick.nav
  */
 public class Vector3d {
+
+    public final float dot(float Bx, float By, float Bz) {
+        return (x*Bx + y*By + z*Bz);
+    }
+
+    public static final float dot(Vector3d A, Vector3d B) {
+        return (A.x*B.x + A.y*B.y + A.z*B.z);
+    }
+    
     /**
      * The x component of the vector.
      */
@@ -54,6 +63,11 @@ public class Vector3d {
         x = 0f; y = 0f; z = 0f;
     }
     
+    public Vector3d(Vertex v){
+        this.x = (float)v.x;
+        this.y = (float)v.y;
+        this.z = (float)v.z;
+    }
     /**
      * Set the x coordinate.
      *     
