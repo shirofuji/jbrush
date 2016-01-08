@@ -193,6 +193,14 @@ public class Polygon implements Renderable{
 
     @Override
     public Color Shade(Ray r, Vector lights, Vector objects, Color bgnd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        float px = r.origin.x + r.t*r.direction.x;
+        float py = r.origin.y + r.t*r.direction.y;
+        float pz = r.origin.z + r.t*r.direction.z;
+        
+        Vector3d center= this.getCenter();
+        Vector3d p = new Vector3d(px,py,pz);
+        Vector3d v = new Vector3d(-r.direction.x,-r.direction.y,-r.direction.z);
+        Vector3d n = new Vector3d(px - center.x,py - center.y,pz-center.z);
+        return s.Shade(p, v, v, lights, objects, bgnd);
     }
 }
